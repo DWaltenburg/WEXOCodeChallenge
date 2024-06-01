@@ -8,10 +8,10 @@ import Offcanvas  from "react-bootstrap/Offcanvas";
 const MyNavbar = () => {
     return (
         <>
-            <Navbar expand='sm' className="bg-body-tertiary mb-3">
+            <Navbar sticky="top" expand='sm' className="bg-body-tertiary mb-3">
               <Container fluid>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
-                <Navbar.Brand href="#">Wexo Film</Navbar.Brand>
+                <Navbar.Brand href="#">XOFI</Navbar.Brand>
                 <Navbar.Offcanvas
                   id={`offcanvasNavbar-expand-sm`}
                   aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
@@ -19,7 +19,7 @@ const MyNavbar = () => {
                 >
                   <Offcanvas.Header closeButton>
                     <Offcanvas.Title id={`offcanvasNavbarLabel-expand-sm`}>
-                      Wexo Film
+                      XOFI
                     </Offcanvas.Title>
                   </Offcanvas.Header>
                   <Offcanvas.Body>
