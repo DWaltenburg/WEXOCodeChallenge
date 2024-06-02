@@ -25,11 +25,11 @@ export default function Home() {
   let isMobile = width <= smBreakpoint;
   let scrollContainerStyle = isMobile
     ? {
-        height: "100svh",
-        overflowY: "scroll",
+        height: "90svh",
+        overflowY: "auto",
         scrollSnapType: "y mandatory",
       }
-    : {};
+    : { width: "100%"};
   let genres = [
     "Action",
     "Comedy",
@@ -42,11 +42,11 @@ export default function Home() {
     "Horror",
   ];
   return (
-    <Container style={scrollContainerStyle}>
+    <div style={scrollContainerStyle}>
       {genres.map((genre) => (
         <GenreSection key={genre} genreTitle={genre} isMobile={isMobile} />
       ))}
-    </Container>
+    </div>
   );
 }
 
@@ -91,7 +91,7 @@ let GenreSection = ({ ...props }) => {
       {props.isMobile ? (
         <TitleCarousel genreTitle={props.genreTitle} />
       ) : (
-        <TitleSidewaysScroll />
+        <TitleSidewaysScroll genreTitle={props.genreTitle} />
       )}
     </>
   );
@@ -99,7 +99,7 @@ let GenreSection = ({ ...props }) => {
 
 let TitleCarousel = ({ ...props }) => {
   let scrollSectionStyle = {
-    height: "100svh",
+    height: "90svh",
     scrollSnapAlign: "center",
   };
   return (
@@ -124,25 +124,36 @@ let TitleCarousel = ({ ...props }) => {
   );
 };
 
-let TitleSidewaysScroll = () => {
+let TitleSidewaysScroll = ({...props}) => {
     let scrollableElementContainerStyle = {
         width: "100%",
-        height: "50svh",
+        height: "auto",
         overflowX: "auto",
         overflowY: "hidden",
         whiteSpace: "nowrap",
         WebkitOverflowScrolling: "touch",
+        MsOverflowStyle: "none",
+        scrollbarWidth: "none",
         };
         let scrollableElementStyle = {
         display: "inline-block",
         width: "25svw",
+        padding: "10px 10px"
         };
   return (
-    <Container>
+    <>
+    <style type="text/css">
+    {`
+    .scrollable-element-container::-webkit-scrollbar {
+        display: none;
+        }
+        `}
+    </style>
+    <div style={{margin: "5svh 10svw"}}>
       <h2 className="font-weight-light">
-        Horizontal Scrolling Cards with React Bootstrap
+      {props.genreTitle} {">"} (should be link to this genres page)
       </h2>
-      <Container
+      <div className="scrollable-element-container"
         style={scrollableElementContainerStyle}
       >
         <div style={scrollableElementStyle}>
@@ -166,8 +177,9 @@ let TitleSidewaysScroll = () => {
         <div style={scrollableElementStyle}>
         <TitleCard />
         </div>        
-      </Container>
-    </Container>
+      </div>
+    </div>
+    </>
   );
 };
 
