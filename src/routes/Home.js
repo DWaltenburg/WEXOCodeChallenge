@@ -6,7 +6,10 @@ import { useState, useEffect } from "react";
 import $ from "jquery";
 
 export default function Home() {
+
+  // State to store the width of the window
   const [width, setWidth] = useState(window.innerWidth);
+  // Event listener to update the width state on window resize
   useEffect(() => {
     const handleResize = () => {
       setWidth(window.innerWidth);
@@ -18,8 +21,11 @@ export default function Home() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // Breakpoint for mobile view
   let smBreakpoint = 576;
   let isMobile = width <= smBreakpoint;
+  // Styles for the scroll container depending on the device
   let scrollContainerStyle = isMobile
     ? {
         height: "90svh",
@@ -46,11 +52,19 @@ export default function Home() {
     </div>
   );
 }
-
+/**
+ * Section component to display the titles of a genre
+ * @param {*} props
+ * @returns Section component with title cards
+ */
 let GenreSection = ({ ...props }) => {
+  // State to store the titles of a genre
   const [titles, setTitles] = useState([]);
+  // Fetch the titles of a genre from the API
   useEffect(() => {
     let fetchedTitles = [];
+
+    // API request settings
     var settings = {
       url: `https://feed.entertainment.tv.theplatform.eu/f/jGxigC/bb-all-pas?form=json&byTags=genre:${props.genreTitle}&range=1-20`,
       method: "GET",
@@ -63,15 +77,19 @@ let GenreSection = ({ ...props }) => {
         console.error(error);
       },
     };
+
+    // Fetch the titles from the API then set the titles state
     $.ajax(settings).then(() => {
       setTitles(fetchedTitles.entries);
-      console.log(props.genreTitle);
-      mapAssetTypeDistribution(fetchedTitles);
+      // mapAssetTypeDistribution(fetchedTitles);
     });
   }, []);
+
+  // Default props
   props.genreTitle = props.genreTitle || "Genre";
   props.isMobile = props.isMobile || false;
 
+  // Conditional rendering of the carousel component depending on the device
   return (
     <>
       {props.isMobile ? (
@@ -83,6 +101,11 @@ let GenreSection = ({ ...props }) => {
   );
 };
 
+/**
+ * Carousel component to display the titles of a genre
+ * @param {*} props 
+ * @returns Carousel component with title cards
+ */
 let TitleCarousel = ({ ...props }) => {
   let totalTitles = props.titles.length || 0;
   let scrollSectionStyle = {
@@ -171,6 +194,11 @@ let TitleSidewaysScroll = ({ ...props }) => {
   );
 };
 
+/**
+ * Card component to display the title and image of a movie or show
+ * @param {*} props
+ * @returns Card component with title and image
+ */
 let TitleCard = ({ ...props }) => {
   props.title = props.title || "Title";
   props.imgSrc = props.imgSrc || placeholderImg;
@@ -184,6 +212,11 @@ let TitleCard = ({ ...props }) => {
   );
 };
 
+/**
+ * Temporary function to map the asset types of the images in the API response
+ * Made to get the gist of the asset type distribution in the API response
+ * @param {*} titles entries from the API response
+ */
 function mapAssetTypeDistribution(titles) {
   let imageTypes = [];
   $.each(titles.entries, function (index, value) {
