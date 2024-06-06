@@ -8,6 +8,30 @@ import Offcanvas  from "react-bootstrap/Offcanvas";
 const MyNavbar = () => {
     return (
         <>
+        <style type="text/css">
+          {`
+          .bg-body-tertiary {
+            background-color: #9cdbda !important;
+          }
+          .navbar-brand, .nav-link{
+            color: #ea445a;
+          }
+          
+          .offcanvas{
+            color: #ea445a;
+            background-color: #9cdbda;
+          } 
+          .dropdown-menu{
+            background-color: #9cdbda;
+          }
+          .dropdown-item{
+            color: #ea445a;
+          }
+          .dropdown-item:hover{
+            background-color: #74f0ed;
+          }
+          `}
+        </style>
             <Navbar sticky="top" expand='sm' className="bg-body-tertiary mb-3">
               <Container fluid>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
