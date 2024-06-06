@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import $ from "jquery";
 
 export default function Home() {
-
   // State to store the width of the window
   const [width, setWidth] = useState(window.innerWidth);
   // Event listener to update the width state on window resize
@@ -32,7 +31,8 @@ export default function Home() {
         overflowY: "auto",
         scrollSnapType: "y mandatory",
       }
-    : { width: "100%" };
+    : { width: "100%",
+     };
   let genres = [
     "Action",
     "Comedy",
@@ -95,7 +95,7 @@ let GenreSection = ({ ...props }) => {
       {props.isMobile ? (
         <TitleCarousel genreTitle={props.genreTitle} titles={titles} />
       ) : (
-        <TitleSidewaysScroll genreTitle={props.genreTitle} />
+        <TitleSidewaysScroll genreTitle={props.genreTitle} titles={titles} />
       )}
     </>
   );
@@ -103,7 +103,7 @@ let GenreSection = ({ ...props }) => {
 
 /**
  * Carousel component to display the titles of a genre
- * @param {*} props 
+ * @param {*} props
  * @returns Carousel component with title cards
  */
 let TitleCarousel = ({ ...props }) => {
@@ -111,13 +111,15 @@ let TitleCarousel = ({ ...props }) => {
   let scrollSectionStyle = {
     height: "90svh",
     scrollSnapAlign: "center",
+    backgroundColor: "#74f0ed",
+    
   };
   return (
     <section style={scrollSectionStyle}>
       <div>
-        <h3>
-          {props.genreTitle} {" (" + totalTitles + ") "} {">"} (should be link
-          to this genres page)
+        <h3 style={{color: "#ea445a"}}>
+          {props.genreTitle} {" (" + totalTitles + ") "} {">"} 
+          {/* {(should be link to this genres page)} */}
         </h3>
       </div>
       <Carousel>
@@ -144,10 +146,11 @@ let TitleSidewaysScroll = ({ ...props }) => {
   };
   let scrollableElementStyle = {
     display: "inline-block",
-    width: "25svw",
+    width: "200px",
+    height: "100%",
     padding: "10px 10px",
   };
-  let totalTitles = 7;
+  let totalTitles = props.titles.length || 0;
 
   return (
     <>
@@ -158,36 +161,20 @@ let TitleSidewaysScroll = ({ ...props }) => {
         }
         `}
       </style>
-      <div style={{ margin: "5svh 10svw" }}>
-        <h2 className="font-weight-light">
-          {props.genreTitle} {" (" + totalTitles + ") "} {">"} (should be link
-          to this genres page)
+      <div style={{ margin: "5svh 10svw 0 10svw", padding:"20px", borderRadius:"1rem", backgroundColor: "#74f0ed", }}>
+        <h2 style={{color: "#ea445a"}} className="font-weight-light">
+          {props.genreTitle} {" (" + totalTitles + ") "} {">"}
+          {/* {(should be link to this genres page)} */}
         </h2>
         <div
           className="scrollable-element-container"
           style={scrollableElementContainerStyle}
         >
-          <div style={scrollableElementStyle}>
-            <TitleCard />
-          </div>
-          <div style={scrollableElementStyle}>
-            <TitleCard />
-          </div>
-          <div style={scrollableElementStyle}>
-            <TitleCard />
-          </div>
-          <div style={scrollableElementStyle}>
-            <TitleCard />
-          </div>
-          <div style={scrollableElementStyle}>
-            <TitleCard />
-          </div>
-          <div style={scrollableElementStyle}>
-            <TitleCard />
-          </div>
-          <div style={scrollableElementStyle}>
-            <TitleCard />
-          </div>
+          {props.titles.map((title) => (
+            <div key={title.id} style={scrollableElementStyle}>
+              <TitleCard title={title.title} imgSrc={findImageUrl(title)} />
+            </div>
+          ))}
         </div>
       </div>
     </>
@@ -203,10 +190,14 @@ let TitleCard = ({ ...props }) => {
   props.title = props.title || "Title";
   props.imgSrc = props.imgSrc || placeholderImg;
   return (
-    <Card>
-      <Card.Img variant="top" src={props.imgSrc} />
+    <Card style={{border:"none",backgroundColor: "#74f0ed",}}>
+      <Card.Img
+        style={{ aspectRatio: 76 / 109, borderRadius: "1rem", filter: "drop-shadow(5px 10px 5px #000000)" }}
+        variant="top"
+        src={props.imgSrc}
+      />
       <Card.Body>
-        <Card.Title>{props.title}</Card.Title>
+        <Card.Title style={{whiteSpace:"wrap", color: "#ea445a"}}>{props.title}</Card.Title>
       </Card.Body>
     </Card>
   );
@@ -231,7 +222,7 @@ function mapAssetTypeDistribution(titles) {
 }
 
 /**
- * Gets a valid image url from the API response with a fallback to a placeholder image. 
+ * Gets a valid image url from the API response with a fallback to a placeholder image.
  * Does not allow urls that begin with "x" as they are not valid. "x" being urls of inactive image servers provided in the challenge description.
  * @param {*} title entry from the API response
  * @returns  url as string
@@ -240,14 +231,15 @@ function findImageUrl(title) {
   let posterImageUrl = "";
 
   $.each(title.plprogram$thumbnails, function (key, val) {
-    if ( !val.plprogram$url.startsWith("https://prod.cdn.bbaws.net") 
-      &&!val.plprogram$url.startsWith("http://data.entertainment.tv.theplatform.eu")) {
+    if (
+      !val.plprogram$url.startsWith("https://prod.cdn.bbaws.net") &&
+      !val.plprogram$url.startsWith("http://data.entertainment.tv.theplatform.eu") &&
+      !val.plprogram$url.startsWith("https://image.tmdb.org") // another image server that might not be valid
+    ) {
       posterImageUrl = val.plprogram$url;
-    } 
-    else {
+    } else {
       posterImageUrl = placeholderImg;
     }
   });
   return posterImageUrl;
 }
-
