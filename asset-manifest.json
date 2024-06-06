@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/WEXOCodeChallenge/static/css/main.db62923b.css",
-    "main.js": "/WEXOCodeChallenge/static/js/main.626ef8f5.js",
+    "main.js": "/WEXOCodeChallenge/static/js/main.42d463c3.js",
     "static/js/453.1f937471.chunk.js": "/WEXOCodeChallenge/static/js/453.1f937471.chunk.js",
     "index.html": "/WEXOCodeChallenge/index.html",
     "main.db62923b.css.map": "/WEXOCodeChallenge/static/css/main.db62923b.css.map",
-    "main.626ef8f5.js.map": "/WEXOCodeChallenge/static/js/main.626ef8f5.js.map",
+    "main.42d463c3.js.map": "/WEXOCodeChallenge/static/js/main.42d463c3.js.map",
     "453.1f937471.chunk.js.map": "/WEXOCodeChallenge/static/js/453.1f937471.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.db62923b.css",
-    "static/js/main.626ef8f5.js"
+    "static/js/main.42d463c3.js"
   ]
 }
