@@ -234,7 +234,8 @@ function findImageUrl(title) {
     if (
       !val.plprogram$url.startsWith("https://prod.cdn.bbaws.net") &&
       !val.plprogram$url.startsWith("http://data.entertainment.tv.theplatform.eu") &&
-      !val.plprogram$url.startsWith("https://image.tmdb.org") // another image server that might not be valid
+      !val.plprogram$url.startsWith("https://image.tmdb.org") && // another image server that might not be valid
+      !val.plprogram$url.startsWith("http://voduzi.images.production.s3.amazonaws.com") // another image server that might not be valid
     ) {
       posterImageUrl = val.plprogram$url;
     } else {
