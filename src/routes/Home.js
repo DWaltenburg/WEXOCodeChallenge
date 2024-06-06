@@ -133,6 +133,11 @@ let TitleCarousel = ({ ...props }) => {
   );
 };
 
+/**
+ * Sideways scroll component to display the titles of a genre
+ * @param {*} props
+ * @returns Sideways scroll component with title cards
+ * **/
 let TitleSidewaysScroll = ({ ...props }) => {
   let scrollableElementContainerStyle = {
     width: "100%",
